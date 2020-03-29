@@ -71,7 +71,6 @@ import org.matsim.core.scenario.ScenarioUtils;
 import org.matsim.core.utils.io.IOUtils;
 import org.matsim.core.utils.io.UncheckedIOException;
 import org.matsim.core.utils.misc.OptionalTime;
-import org.matsim.core.utils.misc.Time;
 import org.matsim.facilities.ActivityFacilities;
 import org.matsim.facilities.ActivityFacility;
 import org.matsim.utils.objectattributes.attributable.Attributable;
@@ -466,10 +465,8 @@ public final class PopulationUtils {
 			case tryEndTimeThenDuration:
 				if (act.getEndTime().isDefined()) {
 					return act.getEndTime().seconds();
-				} else if (act.getMaximumDuration().isDefined()) {
-					return now + act.getMaximumDuration().seconds();
 				} else {
-					return Time.getUndefinedTime();
+					return now + act.getMaximumDuration().seconds();
 				}
 			case minOfDurationAndEndTime:
 				return Math.min(now + act.getMaximumDuration().seconds(), act.getEndTime().seconds());

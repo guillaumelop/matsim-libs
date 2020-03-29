@@ -219,7 +219,7 @@ public final class TripRouter implements MatsimExtensionPoint {
 		}
 		else {
 //			// take travel time from route if possible
-			double ttime = PopulationUtils.decideOnTravelTimeForLeg( (Leg) pe ).orElse(0);
+			double ttime = PopulationUtils.decideOnTravelTimeForLeg( (Leg) pe ).seconds();
 			return now + ttime;
 		}
 	}
