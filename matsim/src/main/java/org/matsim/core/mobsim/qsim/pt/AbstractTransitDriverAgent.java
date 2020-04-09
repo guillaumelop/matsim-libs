@@ -47,6 +47,8 @@ import org.matsim.pt.transitSchedule.api.TransitRouteStop;
 import org.matsim.pt.transitSchedule.api.TransitStopFacility;
 import org.matsim.vehicles.Vehicle;
 
+import com.google.common.base.Preconditions;
+
 public abstract class AbstractTransitDriverAgent implements TransitDriverAgent, PlanAgent {
 
 	private static final Logger log = Logger.getLogger(AbstractTransitDriverAgent.class);
@@ -225,7 +227,6 @@ public abstract class AbstractTransitDriverAgent implements TransitDriverAgent, 
 		if (this.currentStop == null) {
 			this.currentStop = this.nextStop;
 			double delay = now - this.getDeparture().getDepartureTime();
-			//XXX there was a bug: is NaN && isInf --- could impact the results
 			delay -= this.currentStop.getArrivalOffset()
 					.or(this.currentStop::getDepartureOffset)
 					.orElseGet(() -> {
@@ -256,6 +257,7 @@ public abstract class AbstractTransitDriverAgent implements TransitDriverAgent, 
 	}
 
 	private boolean isBadDouble(double d){
+		Preconditions.checkArgument(Double.isFinite(d));
 		return Double.isNaN(d) || Double.isInfinite(d);//FIXME: REMOVE
 	}
 
